@@ -34,15 +34,28 @@ jQuery(document).ready(function ($) {
     // START - click events inside the site
     var btnClick = $(".offset-fix").find("a");
 
-    btnClick.click(function (e) {
-        var href = $(this).attr("href");
+    btnClick.click(function(e) {
+        clickEventsFunction(e, this)
+    });
+
+    var clickEventsFunction = function (e, data) {
+        var href = $(data).attr("href");
 
         // Reveal divs when href to their id
         if (href == "#find-gift") {
-            $("#gender").removeClass("doNotShow")
+
+            var allDivsToHide = $(".hideAgain");
+
+            for (var i = 0; i < allDivsToHide.length; i++) {
+                $(allDivsToHide[i]).addClass("doNotShow");
+                $(allDivsToHide[i]).removeClass("hideAgain");
+
+            }
+            $("#gender").removeClass("doNotShow");
         }
         else {
             $(href).removeClass("doNotShow")
+            $(href).addClass("hideAgain")
 
             if (href == "#search-results") {
                 generateSearchResults()
@@ -56,8 +69,8 @@ jQuery(document).ready(function ($) {
             scrollTop: offsetTop
         }, 300);
         e.preventDefault();
-    });
 
+    }
     // END - click events inside the site
 
 
@@ -145,7 +158,7 @@ jQuery(document).ready(function ($) {
             // Copy to item results json array - for ajax later
             var itemResults = productsMale;
 
-            var productsHtml = ""
+            var productsHtml = "<h1 class='text-center white-color'>Our Results</h1>"
 
             for (var i = 0; i < itemResults.length; i++) {
 
@@ -177,9 +190,22 @@ jQuery(document).ready(function ($) {
                 productsHtml += itemHtml;
             }
 
+            productsHtml +=
+            "<div class='line'>" +
+            "   <h2 class='text-center'>Want to search another gift?</h2>" +
+            "   <div class='s-12 m-4 l-2 center offset-fix'>" +
+            "      <a class='white-btn' href='#find-gift'>click here</a>" +
+            "   </div>" +
+            "</div>";
+
             $(".modalWait").addClass("doNotShow");
             $("#search-results").html(productsHtml);
 
+            var btnClick = $(".offset-fix").find("a");
+
+            btnClick.click(function(e) {
+                clickEventsFunction(e, this)
+            });
         }, 500);
 
     }
