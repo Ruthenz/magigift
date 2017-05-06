@@ -173,21 +173,7 @@ p.logo strong {
 	color: #6c7c84;
 	font-size: 0.85em;
 }
-#about-us {
-	background: none repeat scroll 0 0 #00283a;
-	clear: both;
-}
-#about-us:after {
-	clear: both;
-	content: ".";
-	display: block;
-	height: 0;
-	line-height: 0;
-	visibility: hidden;
-}
-#about-us article {
-	padding: 4em;
-}
+
 article h2 {
 	font-size: 4em;
 	font-weight: 900;
@@ -235,23 +221,7 @@ article ul li:before {
 	text-align: center;
 	width: 20px;
 }
-.about-us-icons i {
-	border: 2px solid #92c500;
-	border-radius: 100px;
-	color: #92c500;
-	display: block;
-	float: left;
-	font-size: 1.6em;
-	height: 60px;
-	line-height: 60px;
-	margin-right: 0.625em;
-	text-align: center;
-	width: 60px;
-}
-.about-us-icons {
-	display: block;
-	margin-top: 2em;
-}
+
 h2.section-title:after {
 	background: #dedede none repeat scroll 0 0;
 	content: "";
@@ -412,14 +382,14 @@ a.tab-label:hover, a.tab-label.active-btn {
 	color: #777;
 	font-size: 0.85em;
 }
-#contact {
+#about-us {
 	background: none repeat scroll 0 0 #fff;
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 	padding: 6em 2em;
 	position: relative;
 	z-index: 2;
 }
-#contact input, #contact textarea {
+#about-us input, #about-us textarea {
 	background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
 	border-radius: 3px;
 }
@@ -427,25 +397,25 @@ form.customform button.color-btn {
 	height: auto;
 	margin-top: 0;
 }
-#contact h2 {
+#about-us h2 {
 	margin: 0 0 1.25em;
 }
-#contact h3 {
+#about-us h3 {
 	color: #92c500;
 	font-size: 1em;
 	font-weight: 700;
 	margin: 0 0 0.625em;
 	text-transform: uppercase;
 }
-#contact p {
+#about-us p {
 	font-size: 0.85em;
 	font-style: normal;
 	line-height: 2em;
 }
-#contact p strong {
+#about-us p strong {
 	font-weight: 700;
 }
-#contact i {
+#about-us i {
 	background: #e0e0e0 none repeat scroll 0 0;
 	border-radius: 30px;
 	color: #fff;
@@ -488,9 +458,6 @@ footer p, footer a:visited, footer a, footer a:hover {
   }
   .social.right {
   	float: right;
-  }
-  #about-us article {
-  	padding: 4em 2.5em;
   }
 }
 @media screen and (max-width: 480px) {
@@ -571,27 +538,30 @@ footer p, footer a:visited, footer a, footer a:hover {
 	font-size: 0.85em;
 	line-height: 1.5em;
 }
-#general{
+#general,
+#search-results{
 	background: #6f9600 none repeat scroll 0 0;
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 	padding: 6em 2em;
 	color: #fff;
 }
 
-#general h2 {
+#general h2,
+#search-results h2 {
 	font-size: 1em;
 	font-weight: 600;
 	margin: 1.25em 0;
 	text-transform: uppercase;
 	color: #fff;
 }
-#general p {
+#general p{
 	color: #fff;
 	font-size: 0.85em;
 	line-height: 1.5em;
 }
 
-#general input, #general textarea {
+#general input, #general textarea,
+#search-results input, #search-results textarea {
 	border-radius: 5px;
 	font-size: small;
 }
@@ -608,4 +578,114 @@ footer p, footer a:visited, footer a, footer a:hover {
 .inputRoundedLeft {
 	border-bottom-left-radius: 0 !important;
 	border-top-left-radius: 0 !important;
+}
+
+#personality{
+	background: none repeat scroll 0 0 #00283a;
+	clear: both;
+	color: white;
+	padding: 6em 2em;
+}
+
+.imageWrapperCategory{
+	clip-path: circle(113px at center);
+	margin: 0 auto;
+	height: 230px;
+	width: 230px;
+}
+
+.imageLabelCategory{
+	background: rgba(0,0,0,0.6);
+	color: white;
+	position: relative;
+	bottom: 52px;
+}
+@media screen and (min-width:480px) {
+	.centerVerticalCategory {
+		height: auto;
+		padding: 5px;
+	}
+}
+
+@media screen and (min-width:769px) {
+	.centerVerticalCategory {
+		height: 230px;
+		padding: 94px 20px;
+	}
+}
+
+.text-right{
+	text-align: right;
+}
+
+.categorySection{
+	padding: 20px 0 !important;
+	border-bottom: dashed 0.5px white;
+}
+
+.categorySection:last-child{
+	padding: 20px 0 !important;
+	border-bottom: dashed 0.5px transparent;
+}
+.top-bottom-margin{
+	margin: 1.25em 0 !important;
+}
+
+.doNotShow{
+	display: none
+}
+
+.top-margin{
+	margin-top: 6em;
+}
+.product-image{
+	height: 150px;
+	margin: 10px;
+	border-radius: 5px;
+}
+
+.product-title{
+	font-size: 1.2em;
+	margin: 10px 0;
+}
+.single-product {
+	color: black;
+	background: white;
+	border-radius: 15px;
+	margin: 15px !important;
+}
+.iconText{
+	font-size: small;
+	margin-left: 2px;
+}
+.iconWrapper{
+	margin: 15px 20px;
+	float: right;
+	color: rgb(55, 55, 55);
+}
+
+
+.modalWait {
+	position: fixed;
+	padding: 0;
+	margin: 0;
+	background: rgba(0, 10, 14, 0.77);
+	top: 0;
+	z-index: 25;
+	color: white;
+	overflow: hidden;
+}
+
+#TextPos{
+	position: fixed;
+	top: 42vh;
+	left: 33vw;
+}
+
+.larger-font{
+	font-size: larger;
+}
+
+.white-color{
+	color: white;
 }
