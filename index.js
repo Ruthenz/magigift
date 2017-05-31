@@ -2,12 +2,52 @@
 var express = require('express');
 var fs = require('fs');
 var amazon = require('amazon-product-api');
+var htmlToText = require('html-to-text');
+var mongoose = require('mongoose');
 
+/************* Globals *************/
+var entries_per_page = 100;
+var Schema = mongoose.Schema;
 
+// create a schema
+var itemSchema = new Schema({
+    _id: String,
+    Description: String,
+    EndTime: Date,
+    ViewItemURLForNaturalSearch: String,
+    ListingType: String,
+    Location: String,
+    PictureURL: [String],
+    PrimaryCategoryID: String,
+    PrimaryCategoryName: String,
+    BidCount: String,
+    ConvertedCurrentPrice: {
+        amount: Number,
+        currencyID: String
+    },
+    ListingStatus: String,
+    TimeLeft: String,
+    Title: String,
+    ItemSpecifics: [{
+        Name: String,
+        Value: String
+    }],
+    Country: String,
+    AutoPay: String,
+    ConditionID: String,
+    ConditionDisplayName: String,
+    GlobalShipping: String,
+});
 
+// the schema is useless so far
+// we need to create a model using it
+var ebay_items = mongoose.model('ebay_items', itemSchema);
 
 
 /************* Static Configurations *************/
+// Connecting to mongoose
+mongoose.connect('mongodb://localhost:27017/magigift');
+
 var app = express();
 var config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 
@@ -16,27 +56,7 @@ static_folders.forEach(function (folder) {
     app.use('/' + folder, express.static(__dirname + '/' + folder));
 });
 
-//
-//    var client = amazon.createClient({
-//        awsId: "AKIAIMQKBBTZYQT5KXZA",
-//        awsSecret: "CuEaczTSZ7OTwNJaQnSnRfa2pDvw",
-//        awsTag: "Tag"
-//    });
-//
-//    client.itemSearch({
-//        director: 'Quentin Tarantino',
-//        actor: 'Samuel L. Jackson',
-//        searchIndex: 'DVD',
-//        audienceRating: 'R',
-//        responseGroup: 'ItemAttributes,Offers,Images'
-//    }, function (err, results, response) {
-//        if (err) {
-//            console.log(err.Error[0].Message);
-//        } else {
-//            console.log(results); // products (Array of Object) 
-//            console.log(response); // response (Array where the first element is an Object that contains Request, Item, etc.) 
-//        }
-//    });
+
 
 /************* Requests *************/
 app.get('/', function (req, res) {
@@ -46,33 +66,18 @@ app.get('/', function (req, res) {
 var ebay = require('ebay-api');
 
 var params = {
-    keywords: ["FIFA"],
-
-    // add additional fields
-    outputSelector: ['AspectHistogram'],
-
+    keywords: ["Travel"],
+    
     paginationInput: {
-        entriesPerPage: 10
+        entriesPerPage: entries_per_page
     },
 
     itemFilter: [
         {
-            name: 'FreeShippingOnly',
+            name: 'HideDuplicateItems',
             value: true
-        },
-        {
-            name: 'MaxPrice',
-            value: '150'
         }
     ]
-
-//    domainFilter: [
-//        {
-//            name: 'domainName',
-//            value: 'Digital_Cameras'
-//        }
-//    ],
-
 };
 
 // Prod
@@ -92,50 +97,49 @@ ebay.xmlRequest({
     devId: '76f1654a-53d4-482f-b76f-61385e481990',
     certId: 'PRD-090330f65088-ad07-4aa8-8580-b223',
     params: params,
-    parser: ebay.parseResponseJson // (default)
+    parser: ebay.parseResponseJson
 }, function itemsCallback(error, itemsResponse) {
 
     if (error) throw error;
 
-    //console.log(itemsResponse.searchResult.item[0]);
+    for (var i = 0; i < entries_per_page; i++) {
+        //console.log('Item id : ' + itemsResponse.searchResult.item[i].itemId);
 
-    ebay.xmlRequest({
-        'serviceName': 'Shopping',
-        'opType': 'GetSingleItem',
-        appId: 'WootWoot-magigift-PRD-d090330f6-d2fa7a5f',
-        devId: '76f1654a-53d4-482f-b76f-61385e481990',
-        certId: 'PRD-090330f65088-ad07-4aa8-8580-b223',
-        params: {
-            'ItemID': itemsResponse.searchResult.item[1].itemId,
-            'includeSelector': 'Description, ItemSpecifics, SecondaryCategoryName, SecondaryCategoryID'
-        }
-    }, function (error, data) {
-        console.log(data.Item.ItemSpecifics.NameValueList);
-    });
+        ebay.xmlRequest({
+            'serviceName': 'Shopping',
 
-    //        var items = itemsResponse.searchResult.item;
-    //
-    //        console.log('Found', items.length, 'items');
-    //
-    //        for (var i = 0; i < items.length; i++) {
-    //            console.log('- ' + items[i].title);
-    //        }
+            'opType': 'GetSingleItem',
+            appId: 'WootWoot-magigift-PRD-d090330f6-d2fa7a5f',
+            devId: '76f1654a-53d4-482f-b76f-61385e481990',
+            certId: 'PRD-090330f65088-ad07-4aa8-8580-b223',
+            params: {
+                'ItemID': itemsResponse.searchResult.item[i].itemId,
+                'includeSelector': 'Description, ItemSpecifics'
+            }
+        }, function (error, data) {
+
+            var text = htmlToText.fromString(data.Item.Description);
+
+            var saving_obj = Object.assign({}, data.Item);
+            saving_obj._id = data.Item.ItemID;
+            saving_obj.Description = text;
+            if (data.Item.ItemSpecifics) {
+                saving_obj.ItemSpecifics = data.Item.ItemSpecifics.NameValueList;
+            }
+            delete saving_obj.ItemID;
+
+            var mongo_ready_obj = new ebay_items(saving_obj);
+            mongo_ready_obj.save(function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Saved item : ' + data.Item.Title);
+                }
+            });
+        });
+    }
+
 });
-
-//ebay.xmlRequest({
-//    'serviceName': 'Shopping',
-//    'opType': 'GetSingleItem',
-//    appId: 'WootWoot-magigift-PRD-d090330f6-d2fa7a5f',
-//    devId: '76f1654a-53d4-482f-b76f-61385e481990',
-//    certId: 'PRD-090330f65088-ad07-4aa8-8580-b223',
-//    params: {
-//        'ItemID': '201906531458',
-//        'includeSelector': 'Details,Description'
-//    }
-//}, function (error, data) {
-//    console.log(data);
-//});
-
 
 
 /************* Starting server *************/
