@@ -1,5 +1,18 @@
 {
     "port": 9000,
     "mongo": {
+        "db": "mongodb://localhost:27017/magigift"
+    },
+    "ebay_keys": {
+        "prod": {
+            "appId": "WootWoot-magigift-PRD-d090330f6-d2fa7a5f",
+            "devId": "76f1654a-53d4-482f-b76f-61385e481990",
+            "certId": "PRD-090330f65088-ad07-4aa8-8580-b223"
+        },
+        "sandbox": {
+            "appId": "WootWoot-magigift-SBX-1dbc19de5-2cfc9281",
+            "devId": "76f1654a-53d4-482f-b76f-61385e481990",
+            "certId": "SBX-dbc19de5d496-2a8a-40c0-af26-14e5"
+        }
     }
 }
