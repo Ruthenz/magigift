@@ -39,7 +39,7 @@ var itemSchema = new Schema({
     ConditionID: String,
     ConditionDisplayName: String,
     GlobalShipping: String,
-    Keywords: [String]
+    keyword: [String]
 });
 
 // the schema is useless so far
@@ -98,7 +98,7 @@ function query_ebay(keywords) {
                 var saving_obj = Object.assign({}, data.Item);
                                 
                 // Getting the object ready for saving
-                saving_obj.Keywords = keywords;
+                saving_obj.keyword = keywords;
                 saving_obj._id = data.Item.ItemID;
                 saving_obj.Description = htmlToText.fromString(data.Item.Description);
                 if (data.Item.ItemSpecifics) {
@@ -122,8 +122,8 @@ function query_ebay(keywords) {
 }
 
 /************* Settings for the query *************/
-var entries_per_page = 10;
-var keywords = [["Architecture"]];
+var entries_per_page = 100;
+var keywords = [["Party"]];
 
 for (var i=0; i<keywords.length; i++) {
     query_ebay(keywords[i]);

@@ -1,7 +1,7 @@
 {
     "port": 9000,
     "mongo": {
-        "db": "mongodb://localhost:27017/magigift"
+        "db": "mongodb://localhost:27017/database_mongo"
     },
     "ebay_keys": {
         "prod": {
