@@ -16,17 +16,19 @@
           rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.js"></script>
     <script type="text/javascript" src="js/modernizr.js"></script>
     <script type="text/javascript" src="js/responsee.js"></script>
     <script type="text/javascript" src="owl-carousel/owl.carousel.js"></script>
     <script type="text/javascript" src="js/template-scripts.js"></script>
+    <script type="text/javascript" src="js/magigiftAngularJs.js"></script>
 
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
 </head>
-<body class="size-1140">
+<body class="size-1140" ng-app="myApp" ng-controller="myCtrl">
 <!-- TOP NAV WITH LOGO -->
 <header>
     <div id="topbar">
@@ -152,7 +154,7 @@
                 <div class="margin offset-fix">
                     <div class="s-12 m-6 l-offset-3 l-3 margin-bottom  gender-female">
                         <div class="imageWrapper">
-                            <a href="#general">
+                            <a href="#general" ng-click="genderChange('female')">
                                 <img src="img/female.jpg">
                                 <div class="imageLabel">Female</div>
                             </a>
@@ -160,7 +162,7 @@
                     </div>
                     <div class="s-12 m-6 l-3 margin-bottom gender-male">
                         <div class="imageWrapper">
-                            <a href="#general">
+                            <a href="#general" ng-click="genderChange('male')">
                                 <img src="img/male.jpg">
                                 <div class="imageLabel">Male</div>
                             </a>
@@ -178,23 +180,23 @@
                         </h2>
                     </div>
                     <div class="s-12 m-12 l-12">
-                        <div class="line center top-bottom-margin">
-                            <div class="s-12 m-offset-2 m-4 l-offset-4 l-2 input-align text-center">
-                                Age
-                            </div>
-                            <div class="s-12 m-4 l-2 text-center">
-                                <input type="number" placeholder="Enter recipient's age">
-                            </div>
-                        </div>
+                        <!--<div class="line center top-bottom-margin">-->
+                            <!--<div class="s-12 m-offset-2 m-4 l-offset-4 l-2 input-align text-center">-->
+                                <!--Age-->
+                            <!--</div>-->
+                            <!--<div class="s-12 m-4 l-2 text-center">-->
+                                <!--<input type="number" placeholder="Enter recipient's age">-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <div class="line top-bottom-margin">
                             <div class="s-12 m-offset-2 m-4 l-offset-4 l-2 input-align text-center">
                                 Price range
                             </div>
                             <div class="s-6 m-2 l-1 text-center">
-                                <input type="number" class="inputRoundedRight" placeholder="Min price">
+                                <input type="number" class="inputRoundedRight" ng-value="0" ng-model="minPrice" placeholder="Min price">
                             </div>
                             <div class="s-6 m-2 l-1 text-center">
-                                <input type="number" class="inputRoundedLeft" placeholder="Max price">
+                                <input type="number" class="inputRoundedLeft" ng-value="200" ng-model="maxPrice"  placeholder="Max price">
                             </div>
                         </div>
                     </div>
@@ -422,6 +424,168 @@
                 </div>
             </div>
 
+            <!-- Fashion lover category -->
+            <div id="Fashion" class="line categorySection">
+                <div class="s-12 m-offset-3 m-6 l-offset-2 l-3 text-center">
+                    <div class="imageWrapperCategory">
+                        <img class="genderChange" src="img/femaleFashion.jpg">
+                        <div class="imageLabelCategory">Loves Fashion</div>
+                    </div>
+                </div>
+                <div class="s-12 m-12 l-5 centerVerticalCategory text-center">
+                    <div class="line">
+                        <div class="radio-toolbar">
+                            <div class="s-offset-1 s-2 m-offset-3 m-1 l-2 ">
+                                <input type="radio" id="Fashion1" name="Fashion" value="all" checked>
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Fashion2" name="Fashion" value="false">
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Fashion3" name="Fashion" value="true">
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Fashion4" name="Fashion" value="true">
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Fashion5" name="Fashion" value="true">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <div class="s-offset-1 s-2 m-offset-3 m-1 l-2">
+                            <label for="Fashion1">1 <br> Not so much</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Fashion2">2</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Fashion3">3</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Fashion4">4</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Fashion5">5 <br> really do</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Electronics lover category -->
+            <div id="Electronics" class="line categorySection">
+                <div class="s-12 m-offset-3 m-6 l-offset-2 l-3 text-center">
+                    <div class="imageWrapperCategory">
+                        <img class="genderChange" src="img/femaleElectronics.jpg">
+                        <div class="imageLabelCategory">Electronics</div>
+                    </div>
+                </div>
+                <div class="s-12 m-12 l-5 centerVerticalCategory text-center">
+                    <div class="line">
+                        <div class="radio-toolbar">
+                            <div class="s-offset-1 s-2 m-offset-3 m-1 l-2 ">
+                                <input type="radio" id="Electronics1" name="Electronics" value="all" checked>
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Electronics2" name="Electronics" value="false">
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Electronics3" name="Electronics" value="true">
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Electronics4" name="Electronics" value="true">
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Electronics5" name="Electronics" value="true">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <div class="s-offset-1 s-2 m-offset-3 m-1 l-2">
+                            <label for="Electronics1">1 <br> Not so much</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Electronics2">2</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Electronics3">3</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Electronics4">4</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Electronics5">5 <br> really do</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Party lover category -->
+            <div id="Party" class="line categorySection">
+                <div class="s-12 m-offset-3 m-6 l-offset-2 l-3 text-center">
+                    <div class="imageWrapperCategory">
+                        <img class="genderChange" src="img/femaleParty.jpg">
+                        <div class="imageLabelCategory">Party Animal</div>
+                    </div>
+                </div>
+                <div class="s-12 m-12 l-5 centerVerticalCategory text-center">
+                    <div class="line">
+                        <div class="radio-toolbar">
+                            <div class="s-offset-1 s-2 m-offset-3 m-1 l-2 ">
+                                <input type="radio" id="Party1" name="Party" value="all" checked>
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Party2" name="Party" value="false">
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Party3" name="Party" value="true">
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Party4" name="Party" value="true">
+                            </div>
+
+                            <div class="s-2 m-1 l-2">
+                                <input type="radio" id="Party5" name="Party" value="true">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <div class="s-offset-1 s-2 m-offset-3 m-1 l-2">
+                            <label for="Party1">1 <br> Not so much</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Party2">2</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Party3">3</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Party4">4</label>
+                        </div>
+                        <div class="s-2 m-1 l-2">
+                            <label for="Party5">5 <br> really do</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <!-- Books lover category -->
             <div id="Books" class="line categorySection">
                 <div class="s-12 m-offset-3 m-6 l-offset-2 l-3 text-center">
@@ -530,54 +694,54 @@
                 </div>
             </div>
 
-            <!-- Party lover category -->
-            <div id="Party" class="line categorySection">
+            <!-- Animals lover category -->
+            <div id="Animals" class="line categorySection">
                 <div class="s-12 m-offset-3 m-6 l-offset-2 l-3 text-center">
                     <div class="imageWrapperCategory">
-                        <img class="genderChange" src="img/femaleParty.jpg">
-                        <div class="imageLabelCategory">Party Animal</div>
+                        <img class="genderChange" src="img/femaleAnimals.jpg">
+                        <div class="imageLabelCategory">Animals Lover</div>
                     </div>
                 </div>
                 <div class="s-12 m-12 l-5 centerVerticalCategory text-center">
                     <div class="line">
                         <div class="radio-toolbar">
                             <div class="s-offset-1 s-2 m-offset-3 m-1 l-2 ">
-                                <input type="radio" id="Party1" name="Party" value="all" checked>
+                                <input type="radio" id="Animals1" name="Animals" value="all" checked>
                             </div>
 
                             <div class="s-2 m-1 l-2">
-                                <input type="radio" id="Party2" name="Party" value="false">
+                                <input type="radio" id="Animals2" name="Animals" value="false">
                             </div>
 
                             <div class="s-2 m-1 l-2">
-                                <input type="radio" id="Party3" name="Party" value="true">
+                                <input type="radio" id="Animals3" name="Animals" value="true">
                             </div>
 
                             <div class="s-2 m-1 l-2">
-                                <input type="radio" id="Party4" name="Party" value="true">
+                                <input type="radio" id="Animals4" name="Animals" value="true">
                             </div>
 
                             <div class="s-2 m-1 l-2">
-                                <input type="radio" id="Party5" name="Party" value="true">
+                                <input type="radio" id="Animals5" name="Animals" value="true">
 
                             </div>
                         </div>
                     </div>
                     <div class="line">
                         <div class="s-offset-1 s-2 m-offset-3 m-1 l-2">
-                            <label for="Party1">1 <br> Not so much</label>
+                            <label for="Animals1">1 <br> Not so much</label>
                         </div>
                         <div class="s-2 m-1 l-2">
-                            <label for="Party2">2</label>
+                            <label for="Animals2">2</label>
                         </div>
                         <div class="s-2 m-1 l-2">
-                            <label for="Party3">3</label>
+                            <label for="Animals3">3</label>
                         </div>
                         <div class="s-2 m-1 l-2">
-                            <label for="Party4">4</label>
+                            <label for="Animals4">4</label>
                         </div>
                         <div class="s-2 m-1 l-2">
-                            <label for="Party5">5 <br> really do</label>
+                            <label for="Animals5">5 <br> really do</label>
                         </div>
                     </div>
 
@@ -585,13 +749,36 @@
             </div>
 
             <div class="s-12 m-4 l-2 center offset-fix categorySection">
-                <a class="white-btn top-margin" href="#search-results">Search Now</a>
+                <a class="white-btn top-margin" href="#search-results" ng-click="generateResults()">Search Now</a>
             </div>
         </div>
     </div>
 
-    <div id="search-results" class="doNotShow">
+    <div id="search-results" ng-if="loadGifts">
 
+        <div class="line" ng-repeat="gift in gifts">
+            <div class="s-12 m-offset-1 m-10 l-offset-1 l-10">
+                <a href="{{gift.ViewItemURLForNaturalSearch}}">
+                    <div class="line single-product">
+                        <div class="s-offset-1 s-10 m-offset-1 m-10 l-3">
+                            <img class="product-image" src="{{gift.PictureURL[0]}}">
+                        </div>
+                        <div class="s-offset-1 s-10 m-offset-1 m-10 l-7 product-description">
+                            <h3 class="product-title">{{gift.Title}}</h3>
+                            <p>{{gift.Description | limitTo: 100 }}{{gift.Description.length > 20 ? '...' : ''}}</p>
+                        </div>
+                        <div class="s-offset-1 s-10 m-offset-1 m-10 l-2">
+                    <span class="iconWrapper">
+                        <span class="fa fa-money"></span>
+                    <span class="iconText">
+                        {{gift.ConvertedCurrentPrice.amount}}
+                    </span>
+                </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
         <!-- THE SEARCH RESULTS WILL BE HERE -->
 
     </div>

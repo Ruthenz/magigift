@@ -35,13 +35,13 @@ var itemSchema = new Schema({
     ConditionDisplayName: String,
     GlobalShipping: String,
     keyword: String,
+    webKeyword: String,
+    gender: String,
     Classifier: [{
         key: String, 
         value: String
     }]
-} 
-
-);
+});
 
 /************* Static Configurations *************/
 // Connecting to mongoose
@@ -49,7 +49,7 @@ mongoose.connect('mongodb://localhost:27017/database_mongo');
 
 // the schema is useless so far
 // we need to create a model using it
-var ebay_items = mongoose.model('ebay_items', itemSchema, 'ebay_items');
+var ebay_items = mongoose.model('ebay_items', itemSchema, 'ebay_items')
 var ebay_items_training = mongoose.model('ebay_items_training', itemSchema, 'ebay_items_training');
 var ebay_items_test = mongoose.model('ebay_items_test', itemSchema, 'ebay_items_test');
 
@@ -59,23 +59,23 @@ var config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 var bayes = require('./js/naive-bayes');
 var classifier = bayes();
 
-ebay_items.collection.distinct('keyword', function(error, keywords) {
+ebay_items.collection.distinct('webKeyword', function(error, keywords) {
     for(var i = 0; i < keywords.length; i++){
         
         console.log("****************************************************************** ")
         console.log("**************STARTING KEYWORD "+ keywords[i]+"*************** ")
         console.log("****************************************************************** ")
         
-        ebay_items.find({ "keyword" : keywords[i] },function(err, data){
+        ebay_items.find({ "webKeyword" : keywords[i] },function(err, data){
             for(var j = 0; j < data.length; j++){
                 
                 console.log("-----------------------------------------------------------------")
-                console.log("--------------------LEARNING ITEM NO. "+ j+" " + data[j].keyword + "---------------------------")
+                console.log("--------------------LEARNING ITEM NO. "+ j+" " + data[j].webKeyword + "---------------------------")
                 console.log("-----------------------------------------------------------------")
                 
                 var stringJson = data[j].toString();
                 
-                classifier.learn(stringJson, data[j].keyword);
+                classifier.learn(stringJson, data[j].webKeyword);
             }
         })
     }
@@ -93,7 +93,7 @@ var q = ebay_items.find({}, function(err, data){
      for(var j = 0; j < data.length; j++){
          
             console.log("-----------------------------------------------------------------")
-            console.log("--------------------Classiffy ITEM NO. "+ j+" Keyword " + data[j].keyword + "---------------------------")
+            console.log("--------------------Classiffy ITEM NO. "+ j+" Keyword " + data[j].webKeyword + "---------------------------")
             console.log("--------------------Title "+ data[j].Title + "---------------------------")
             console.log("-----------------------------------------------------------------")
 
@@ -109,7 +109,7 @@ var q = ebay_items.find({}, function(err, data){
                 return b.value - a.value;
             });
 
-             if(data[j].keyword == dataClassified[0].key){
+             if(data[j].webKeyword == dataClassified[0].key){
                  counterCorrect++;
              }
              console.log(dataClassified);

@@ -39,7 +39,13 @@ var itemSchema = new Schema({
     ConditionID: String,
     ConditionDisplayName: String,
     GlobalShipping: String,
-    keyword: [String]
+    keyword: String,
+    webKeyword: String,
+    gender: String,
+    Classifier: [{
+        key: String,
+        value: String
+    }]
 });
 
 // the schema is useless so far
@@ -125,21 +131,7 @@ function query_ebay(keywords) {
 var entries_per_page = 100;
 var keywords = 
     [
-        ["Women, Sport"],
-        ["Women, Cloths"],
-        ["Books"],
-        ["Jewelry"],
-        ["Electronics"],
-        ["Gamer"],
-        ["Party"],
-        ["Travel"],
-        ["Cooking"],
-        ["Men, Cloths"],
-        ["Music"],
-        ["Crafts"],
-        ["Animal"],
-        ["Men, Sport"],
-        ["Sport"]
+        ["Crafts"]
     ];
 
 for (var i=0; i<keywords.length; i++) {

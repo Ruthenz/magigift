@@ -148,65 +148,65 @@ jQuery(document).ready(function ($) {
 
     // START - inserting search results to html
     var generateSearchResults = function () {
-
-        var winWidth = $( window ).width();
-        var winHeight = $( window ).height()
-        $(".modalWait").width(winWidth);
-        $(".modalWait").height(winHeight);
-        $(".modalWait").removeClass("doNotShow");
-        setTimeout(function(){
-            // Copy to item results json array - for ajax later
-            var itemResults = productsMale;
-
-            var productsHtml = "<h1 class='text-center white-color'>Our Results</h1>"
-
-            for (var i = 0; i < itemResults.length; i++) {
-
-                var description = itemResults[i].description;
-                if (itemResults[i].description.length > 100) {
-                    description = itemResults[i].description.substring(0, 24) + "...";
-                }
-                var itemHtml =
-                    "<div class='line'>" +
-                    "   <div class='s-12 m-offset-1 m-10 l-offset-1 l-10'> <a href='" + itemResults[i].href + "'> " +
-                    "       <div class='line single-product'>" +
-                    "         <div class='s-offset-1 s-10 m-offset-1 m-10 l-3'>" +
-                    "           <img class='product-image' src='" + itemResults[i].image + "'>" +
-                    "         </div>" +
-                    "         <div class='s-offset-1 s-10 m-offset-1 m-10 l-7 product-description'>" +
-                    "             <h3 class='product-title'>" + itemResults[i].name + "</h3>" +
-                    "             <p>" + description + "</p>" +
-                    "         </div>" +
-                    "         <div class='s-offset-1 s-10 m-offset-1 m-10 l-2'>" +
-                    "            <span class='iconWrapper'>" +
-                    "                <span class='fa fa-money'></span>" +
-                    "                <span class='iconText'>" + itemResults[i].price + "</span>" +
-                    "            </span>" +
-                    "         </div>" +
-                    "      </div>" +
-                    "   </a> </div>" +
-                    "</div>"
-
-                productsHtml += itemHtml;
-            }
-
-            productsHtml +=
-            "<div class='line'>" +
-            "   <h2 class='text-center'>Want to search another gift?</h2>" +
-            "   <div class='s-12 m-4 l-2 center offset-fix'>" +
-            "      <a class='white-btn' href='#find-gift'>click here</a>" +
-            "   </div>" +
-            "</div>";
-
-            $(".modalWait").addClass("doNotShow");
-            $("#search-results").html(productsHtml);
-
-            var btnClick = $(".offset-fix").find("a");
-
-            btnClick.click(function(e) {
-                clickEventsFunction(e, this)
-            });
-        }, 500);
+        //
+        // var winWidth = $( window ).width();
+        // var winHeight = $( window ).height()
+        // $(".modalWait").width(winWidth);
+        // $(".modalWait").height(winHeight);
+        // $(".modalWait").removeClass("doNotShow");
+        // setTimeout(function(){
+        //     // Copy to item results json array - for ajax later
+        //     var itemResults = productsMale;
+        //
+        //     var productsHtml = "<h1 class='text-center white-color'>Our Results</h1>"
+        //
+        //     for (var i = 0; i < itemResults.length; i++) {
+        //
+        //         var description = itemResults[i].description;
+        //         if (itemResults[i].description.length > 100) {
+        //             description = itemResults[i].description.substring(0, 24) + "...";
+        //         }
+        //         var itemHtml =
+        //             "<div class='line'>" +
+        //             "   <div class='s-12 m-offset-1 m-10 l-offset-1 l-10'> <a href='" + itemResults[i].href + "'> " +
+        //             "       <div class='line single-product'>" +
+        //             "         <div class='s-offset-1 s-10 m-offset-1 m-10 l-3'>" +
+        //             "           <img class='product-image' src='" + itemResults[i].image + "'>" +
+        //             "         </div>" +
+        //             "         <div class='s-offset-1 s-10 m-offset-1 m-10 l-7 product-description'>" +
+        //             "             <h3 class='product-title'>" + itemResults[i].name + "</h3>" +
+        //             "             <p>" + description + "</p>" +
+        //             "         </div>" +
+        //             "         <div class='s-offset-1 s-10 m-offset-1 m-10 l-2'>" +
+        //             "            <span class='iconWrapper'>" +
+        //             "                <span class='fa fa-money'></span>" +
+        //             "                <span class='iconText'>" + itemResults[i].price + "</span>" +
+        //             "            </span>" +
+        //             "         </div>" +
+        //             "      </div>" +
+        //             "   </a> </div>" +
+        //             "</div>"
+        //
+        //         productsHtml += itemHtml;
+        //     }
+        //
+        //     productsHtml +=
+        //     "<div class='line'>" +
+        //     "   <h2 class='text-center'>Want to search another gift?</h2>" +
+        //     "   <div class='s-12 m-4 l-2 center offset-fix'>" +
+        //     "      <a class='white-btn' href='#find-gift'>click here</a>" +
+        //     "   </div>" +
+        //     "</div>";
+        //
+        //     $(".modalWait").addClass("doNotShow");
+        //     $("#search-results").html(productsHtml);
+        //
+        //     var btnClick = $(".offset-fix").find("a");
+        //
+        //     btnClick.click(function(e) {
+        //         clickEventsFunction(e, this)
+        //     });
+        // }, 500);
 
     }
 
