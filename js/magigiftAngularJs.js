@@ -13,87 +13,91 @@
 //         // $http.get('/getCategories')
 //
 //     }]);
-
 var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope, $http) {
+app.controller('myCtrl', function ($scope, $http) {
+    $scope.minPrice = 0;
+    $scope.maxPrice = 300;
+    
+    
     $scope.loadGifts = false;
-
     // $http.get('/getCategories').success(function(allCategories) {
     //     $scope.categories = allCategories;
     // }).error(function (response, status, header, config) {
     //     alert("ouh, an error...");
     // });
-
-$scope.genderChange = function (gender) {
-    $scope.gender = gender;
-}
+    $scope.genderChange = function (gender) {
+        $scope.gender = gender;
+    }
     $scope.generateResults = function () {
-
         $scope.gifts = [];
-        var winWidth = $( window ).width();
-        var winHeight = $( window ).height()
+        var winWidth = $(window).width();
+        var winHeight = $(window).height()
         $(".modalWait").width(winWidth);
         $(".modalWait").height(winHeight);
         $(".modalWait").removeClass("doNotShow");
-
-
         $scope.categories = ["Sport", "Outdoors", "Creative", "Cooking", "Fashion", "Electronics", "Party", "Books", "Gamer", "Animals"];
         $scope.UserChoices = [];
         var counter = 0;
-
-        angular.forEach($scope.categories, function(value, key) {
+        angular.forEach($scope.categories, function (value, key) {
             var categoryChoice = ($('input[name=' + value + ']:checked')[0].id).split(value)[1];
-
-            if (categoryChoice == 5 || categoryChoice == 4){
-
-                $scope.UserChoices[counter] = {key: value, value: categoryChoice};
+            if (categoryChoice == 5 || categoryChoice == 4) {
+                $scope.UserChoices[counter] = {
+                    key: value
+                    , value: categoryChoice
+                };
                 counter++
             }
         })
-
-
-
-
+        
+        if(permArr){
+            permArr = []
+            usedChars = [];
+        }
         var allPermute = permute($scope.UserChoices);
         var query = {
-                    $and:[
-                            {$or: []},
-                            {$and: [{ "ConvertedCurrentPrice.amount":{ $gte: $scope.minPrice}}, { "ConvertedCurrentPrice.amount":{ $lte: $scope.maxPrice } } ]},
-                            {"gender":$scope.gender}
+            $and: [
+                {
+                    $or: []
+                }
+                , {
+                    $and: [{
+                        "ConvertedCurrentPrice.amount": {
+                            $gte: $scope.minPrice
+                        }
+                    }, {
+                        "ConvertedCurrentPrice.amount": {
+                            $lte: $scope.maxPrice
+                        }
+                    }]
+                }
+                , {
+                    "gender": $scope.gender
+                }
                          ]
-                    };
-
-        angular.forEach(allPermute, function(value,key){
-
+        };
+        angular.forEach(allPermute, function (value, key) {
             var arrCurrentPermute = {};
-            for(var i = 0; i < value.length; i++){
+            for (var i = 0; i < value.length; i++) {
                 arrCurrentPermute["Classifier." + i + ".key"] = value[i].key;
             }
-
             query.$and[0].$or.push(arrCurrentPermute);
         })
-
-        $http.post('/searchGifts',JSON.stringify(query)).success(function(gifts) {
+        $http.post('/searchGifts', JSON.stringify(query)).success(function (gifts) {
             $scope.gifts = gifts
-
             $(".modalWait").addClass("doNotShow");
-
             $scope.loadGifts = true;
         }).error(function (response, status, header, config) {
             alert("ouh, an error...");
         });
     }
-
-    $scope.arrangeAll = function(allWithSameRate){
-
+    $scope.arrangeAll = function (allWithSameRate) {
         var arrAllPossibleOptions = Atzeret(allWithSameRate.length);
-v
     }
-
-    var permArr = [],
-        usedChars = [];
+    var permArr = []
+        , usedChars = [];
 
     function permute(input) {
+        
         var i, ch;
         for (i = 0; i < input.length; i++) {
             ch = input.splice(i, 1)[0];
@@ -107,7 +111,6 @@ v
         }
         return permArr
     };
-
     // // C program to print all permutations with duplicates allowed
     // /* Function to swap values at two pointers */
     // function swap(arr, locX, locY)
@@ -146,4 +149,15 @@ v
     //     }
     // }
 
+    // $scope.removeValues = function(){
+    //     angular.forEach($scope.categories, function (value, key) {
+    //         var $radios = $('input:radio[name="+value+"]');
+    //
+    //         // $('#' + name +"1").prop('checked',true);
+    //         $radios.filter('[value='+value+'1]').prop('checked', true);
+    //         // $('input[name="' + name+ '"]').val([name + "1"]);
+    //         // var categoryChoice = ($('input[name=' + value + ']:checked')[0].id).split(value)[1];
+    //
+    //     })
+    // }
 });

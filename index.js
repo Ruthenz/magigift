@@ -146,7 +146,7 @@ app.post('/searchGifts', function (req, res) {
     var val = eval(req.body);
 
     console.log(val);
-    ebay_items.find(val).limit(30).exec(function(err, result){
+    ebay_items.find(val).limit(12).exec(function(err, result){
         console.log(result);
         res.send(result);
     });

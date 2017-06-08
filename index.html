@@ -193,10 +193,10 @@
                                 Price range
                             </div>
                             <div class="s-6 m-2 l-1 text-center">
-                                <input type="number" class="inputRoundedRight" ng-value="0" ng-model="minPrice" placeholder="Min price">
+                                <input type="number" class="inputRoundedRight" ng-model="minPrice" placeholder="Min price">
                             </div>
                             <div class="s-6 m-2 l-1 text-center">
-                                <input type="number" class="inputRoundedLeft" ng-value="200" ng-model="maxPrice"  placeholder="Max price">
+                                <input type="number" class="inputRoundedLeft" ng-model="maxPrice"  placeholder="Max price">
                             </div>
                         </div>
                     </div>
@@ -749,12 +749,14 @@
             </div>
 
             <div class="s-12 m-4 l-2 center offset-fix categorySection">
-                <a class="white-btn top-margin" href="#search-results" ng-click="generateResults()">Search Now</a>
+                <a class="white-btn top-margin" href="#search-result" ng-click="generateResults()">Search Now</a>
             </div>
         </div>
     </div>
 
-    <div id="search-results" ng-if="loadGifts">
+    <div id="search-result">
+    <div id="search-results" ng-show="loadGifts">
+        <h1 class='text-center white-color'>Our Results</h1>
 
         <div class="line" ng-repeat="gift in gifts">
             <div class="s-12 m-offset-1 m-10 l-offset-1 l-10">
@@ -779,8 +781,16 @@
                 </a>
             </div>
         </div>
-        <!-- THE SEARCH RESULTS WILL BE HERE -->
 
+        <div class='line'>
+            <h2 class='text-center'>Want to search another gift?</h2>
+            <div class='s-12 m-4 l-2 center offset-fix'>
+                <a class='white-btn' href='#find-gift'>click here</a>
+            </div>
+        </div>
+
+
+    </div>
     </div>
 
     <div class="modalWait doNotShow">
