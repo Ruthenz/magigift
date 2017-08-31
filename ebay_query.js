@@ -130,9 +130,22 @@ function query_ebay(keywords) {
 /************* Settings for the query *************/
 var entries_per_page = 100;
 var keywords = 
-    [
-        ["Crafts"]
-    ];
+//        ["Music",
+//         "Men, Cloths",
+//         "Women, Cloths",
+//         "Party",
+//         "Books",
+//         "Video game",
+//         "Gamer",
+//         "Cell Phones",
+//         "Consumer Electronics",
+//         "Crafts",
+//         "Pet Supplies",
+//         "Travel",
+        ["Cooking",
+        "Men, Sport",
+        "Women, Sport"
+        ];
 
 for (var i=0; i<keywords.length; i++) {
     query_ebay(keywords[i]);
